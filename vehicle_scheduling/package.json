@@ -1,0 +1,15 @@
+{
+  "name": "vehicle-maintenance-scheduler",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vehicle maintenance scheduler microservice using dynamic programming.",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "schedule": "node src/run-scheduler.js",
+    "log:test": "node src/logging/test-log.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
