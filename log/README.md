@@ -24,10 +24,10 @@ await sendLog(
   {
     ACCESS_TOKEN: process.env.ACCESS_TOKEN,
     LOG_SERVER_URL: "http://20.244.56.144/evaluation-service/logs",
-    REQUEST_TIMEOUT_MS: 15000
+    REQUEST_TIMEOUT_MS: 15000,
   },
   "INFO",
   "middleware",
-  "Shared logger initialized."
+  "Shared logger initialized.",
 );
 ```

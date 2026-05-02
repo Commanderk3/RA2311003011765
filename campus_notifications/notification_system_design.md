@@ -546,24 +546,24 @@ Problem: Every page load fetches notifications, overwhelming DB.
 ## 4.2 Tradeoffs
 
 1. Redis cache-aside
-Pros: Big DB offload, very fast reads.
-Cons: Invalidation complexity, eventual consistency windows.
+   Pros: Big DB offload, very fast reads.
+   Cons: Invalidation complexity, eventual consistency windows.
 
 2. WebSocket/SSE deltas
-Pros: Best UX, fewer repeated pull requests.
-Cons: Connection lifecycle complexity, scaling stateful connections.
+   Pros: Best UX, fewer repeated pull requests.
+   Cons: Connection lifecycle complexity, scaling stateful connections.
 
 3. Cursor incremental fetch
-Pros: Stateless server API, predictable DB usage.
-Cons: Slightly more client complexity with cursor management.
+   Pros: Stateless server API, predictable DB usage.
+   Cons: Slightly more client complexity with cursor management.
 
 4. HTTP ETag
-Pros: Easy bandwidth reduction when no changes.
-Cons: Does not remove all DB reads unless coupled with cache.
+   Pros: Easy bandwidth reduction when no changes.
+   Cons: Does not remove all DB reads unless coupled with cache.
 
 5. Materialized unread counters
-Pros: Very fast badge count.
-Cons: Needs robust update/rebuild logic to avoid drift.
+   Pros: Very fast badge count.
+   Cons: Needs robust update/rebuild logic to avoid drift.
 
 Recommended combination:
 

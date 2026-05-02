@@ -30,7 +30,7 @@ const server = http.createServer(async (req, res) => {
         config,
         "INFO",
         "middleware",
-        `Schedule generated successfully for depotId=${depotId || "all"}.`
+        `Schedule generated successfully for depotId=${depotId || "all"}.`,
       );
       writeJson(res, 200, result);
     } catch (error) {
@@ -38,7 +38,7 @@ const server = http.createServer(async (req, res) => {
         config,
         "ERROR",
         "middleware",
-        `Schedule generation failed: ${error.message}`
+        `Schedule generation failed: ${error.message}`,
       );
       writeJson(res, 500, { error: error.message });
     }

@@ -3,7 +3,7 @@ const path = require("path");
 
 function stripQuotes(value) {
   if (
-    (value.startsWith("\"") && value.endsWith("\"")) ||
+    (value.startsWith('"') && value.endsWith('"')) ||
     (value.startsWith("'") && value.endsWith("'"))
   ) {
     return value.slice(1, -1);
@@ -38,5 +38,5 @@ function loadEnv(filePath = path.join(process.cwd(), ".env")) {
 }
 
 module.exports = {
-  loadEnv
+  loadEnv,
 };

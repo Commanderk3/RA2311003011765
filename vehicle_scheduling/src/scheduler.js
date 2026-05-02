@@ -21,7 +21,7 @@ function normalizeDepots(rawDepots) {
 
     return {
       ID: id,
-      MechanicHours: mechanicHours
+      MechanicHours: mechanicHours,
     };
   });
 }
@@ -51,7 +51,7 @@ function normalizeVehicles(rawVehicles) {
     return {
       TaskID: taskId,
       Duration: duration,
-      Impact: impact
+      Impact: impact,
     };
   });
 }
@@ -74,7 +74,7 @@ async function generateSchedules(config, options = {}) {
   const token = await getAccessToken(config);
   const [depotsResponse, vehiclesResponse] = await Promise.all([
     fetchDepots(config, token),
-    fetchVehicles(config, token)
+    fetchVehicles(config, token),
   ]);
 
   const depots = normalizeDepots(depotsResponse.depots);
@@ -99,13 +99,13 @@ async function generateSchedules(config, options = {}) {
         totalImpact: 0,
         selectedTaskCount: 0,
         selectedTaskIDs: [],
-        selectedTasks: []
-      }))
+        selectedTasks: [],
+      })),
     };
   }
 
   const maxCapacity = Math.max(
-    ...targetDepots.map((depot) => depot.MechanicHours)
+    ...targetDepots.map((depot) => depot.MechanicHours),
   );
   const planner = planKnapsack(vehicles, maxCapacity);
 
@@ -118,7 +118,7 @@ async function generateSchedules(config, options = {}) {
       totalImpact: result.totalImpact,
       selectedTaskCount: result.selectedTasks.length,
       selectedTaskIDs: result.selectedTasks.map((task) => task.TaskID),
-      selectedTasks: result.selectedTasks
+      selectedTasks: result.selectedTasks,
     };
   });
 
@@ -126,10 +126,10 @@ async function generateSchedules(config, options = {}) {
     generatedAt: new Date().toISOString(),
     depotCount: targetDepots.length,
     vehicleTaskCount: vehicles.length,
-    schedules
+    schedules,
   };
 }
 
 module.exports = {
-  generateSchedules
+  generateSchedules,
 };

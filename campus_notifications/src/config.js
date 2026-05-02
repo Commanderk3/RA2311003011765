@@ -17,7 +17,7 @@ function buildConfig() {
     AUTH_URL: `${apiBaseUrl}/auth`,
     NOTIFICATIONS_URL: `${apiBaseUrl}/notifications`,
     REQUEST_TIMEOUT_MS: Number(process.env.REQUEST_TIMEOUT_MS || 15000),
-    TOP_N: Number(process.env.TOP_N || 10)
+    TOP_N: Number(process.env.TOP_N || 10),
   };
 }
 
@@ -32,19 +32,19 @@ function validateConfig(config) {
     "ROLL_NO",
     "ACCESS_CODE",
     "CLIENT_ID",
-    "CLIENT_SECRET"
+    "CLIENT_SECRET",
   ];
 
   const missing = required.filter((key) => !String(config[key] || "").trim());
   if (missing.length > 0) {
     throw new Error(
       `Missing configuration: ${missing.join(", ")}. ` +
-        "Set ACCESS_TOKEN, or set all fallback auth credentials in .env."
+        "Set ACCESS_TOKEN, or set all fallback auth credentials in .env.",
     );
   }
 }
 
 module.exports = {
   buildConfig,
-  validateConfig
+  validateConfig,
 };

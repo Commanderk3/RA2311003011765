@@ -12,7 +12,7 @@ function buildTextReport(result) {
     `Generated At: ${result.generatedAt}`,
     `Depots Processed: ${result.depotCount}`,
     `Vehicle Tasks Considered: ${result.vehicleTaskCount}`,
-    ""
+    "",
   ];
 
   for (const schedule of result.schedules) {
@@ -25,7 +25,7 @@ function buildTextReport(result) {
     lines.push(
       schedule.selectedTaskIDs.length > 0
         ? schedule.selectedTaskIDs.join(", ")
-        : "(none)"
+        : "(none)",
     );
     lines.push("");
   }
@@ -49,7 +49,7 @@ async function main() {
     config,
     "INFO",
     "middleware",
-    `Scheduler output for ${result.depotCount} depots and saved to output files.`
+    `Scheduler output for ${result.depotCount} depots and saved to output files.`,
   );
 
   console.log(`Saved JSON output to ${jsonPath}`);
@@ -61,7 +61,7 @@ main().catch((error) => {
     config,
     "ERROR",
     "middleware",
-    `Scheduler run failed: ${error.message}`
+    `Scheduler run failed: ${error.message}`,
   );
   console.error(`Failed to generate schedule: ${error.message}`);
   process.exitCode = 1;

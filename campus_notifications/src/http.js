@@ -13,7 +13,7 @@ async function httpJson(url, options = {}) {
     method: options.method || "GET",
     headers: options.headers || {},
     body: options.body,
-    signal: AbortSignal.timeout(timeoutMs)
+    signal: AbortSignal.timeout(timeoutMs),
   };
 
   let response;
@@ -28,7 +28,7 @@ async function httpJson(url, options = {}) {
     const bodyText =
       typeof payload === "string" ? payload : JSON.stringify(payload);
     throw new Error(
-      `HTTP ${response.status} from ${url}: ${bodyText.slice(0, 500)}`
+      `HTTP ${response.status} from ${url}: ${bodyText.slice(0, 500)}`,
     );
   }
 
@@ -40,5 +40,5 @@ async function httpJson(url, options = {}) {
 }
 
 module.exports = {
-  httpJson
+  httpJson,
 };

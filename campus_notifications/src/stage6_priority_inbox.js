@@ -7,7 +7,7 @@ const { httpJson } = require("./http");
 const TYPE_WEIGHTS = Object.freeze({
   placement: 3,
   result: 2,
-  event: 1
+  event: 1,
 });
 
 const WEIGHT_FACTOR = 10_000_000_000_000;
@@ -109,7 +109,9 @@ class MinHeap {
 }
 
 function normalizeType(type) {
-  return String(type || "").trim().toLowerCase();
+  return String(type || "")
+    .trim()
+    .toLowerCase();
 }
 
 function getTypeWeight(type) {
@@ -136,7 +138,7 @@ function isUnread(notification) {
     notification.isRead,
     notification.IsRead,
     notification.read,
-    notification.Read
+    notification.Read,
   ];
 
   for (const value of candidates) {
@@ -180,7 +182,7 @@ function buildCandidate(notification) {
     Timestamp: notification.Timestamp,
     weight,
     timestampMs,
-    priorityScore
+    priorityScore,
   };
 }
 
@@ -226,9 +228,9 @@ async function fetchNotifications(config) {
   const payload = await httpJson(config.NOTIFICATIONS_URL, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     },
-    timeoutMs: config.REQUEST_TIMEOUT_MS
+    timeoutMs: config.REQUEST_TIMEOUT_MS,
   });
 
   if (!Array.isArray(payload.notifications)) {
@@ -246,7 +248,7 @@ function buildTextReport(topNotifications, meta) {
     `ReturnedTopN: ${meta.returnedCount}`,
     "",
     "Rank | ID                                   | Type      | Timestamp           | Score           | Message",
-    "-----|--------------------------------------|-----------|---------------------|-----------------|--------"
+    "-----|--------------------------------------|-----------|---------------------|-----------------|--------",
   ];
 
   topNotifications.forEach((item, index) => {
@@ -256,7 +258,9 @@ function buildTextReport(topNotifications, meta) {
     const timestamp = String(item.Timestamp || "").padEnd(19, " ");
     const score = String(item.priorityScore).padEnd(15, " ");
     const message = String(item.Message || "");
-    lines.push(`${rank} | ${id} | ${type} | ${timestamp} | ${score} | ${message}`);
+    lines.push(
+      `${rank} | ${id} | ${type} | ${timestamp} | ${score} | ${message}`,
+    );
   });
 
   return lines.join("\n");
@@ -269,7 +273,7 @@ async function main() {
   const notifications = await fetchNotifications(config);
   const topNotifications = getTopNUnreadNotifications(
     notifications,
-    Number.isInteger(config.TOP_N) && config.TOP_N > 0 ? config.TOP_N : 10
+    Number.isInteger(config.TOP_N) && config.TOP_N > 0 ? config.TOP_N : 10,
   );
 
   const generatedAt = new Date().toISOString();
@@ -277,7 +281,7 @@ async function main() {
     generatedAt,
     totalFetched: notifications.length,
     returnedCount: topNotifications.length,
-    topNotifications
+    topNotifications,
   };
 
   const outputDir = path.join(__dirname, "..", "output");
@@ -286,11 +290,7 @@ async function main() {
   const jsonPath = path.join(outputDir, "top10_notifications.json");
   const txtPath = path.join(outputDir, "top10_notifications.txt");
   fs.writeFileSync(jsonPath, JSON.stringify(output, null, 2), "utf8");
-  fs.writeFileSync(
-    txtPath,
-    buildTextReport(topNotifications, output),
-    "utf8"
-  );
+  fs.writeFileSync(txtPath, buildTextReport(topNotifications, output), "utf8");
 
   console.log(`Saved JSON output: ${jsonPath}`);
   console.log(`Saved text output: ${txtPath}`);
@@ -309,5 +309,5 @@ module.exports = {
   parseTimestampMs,
   isUnread,
   buildCandidate,
-  comparePriority
+  comparePriority,
 };

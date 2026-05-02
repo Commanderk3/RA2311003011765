@@ -22,7 +22,7 @@ function buildConfig() {
       process.env.LOG_SERVER_URL ||
       "http://20.244.56.144/evaluation-service/logs",
     PORT: Number(process.env.PORT || 3000),
-    REQUEST_TIMEOUT_MS: Number(process.env.REQUEST_TIMEOUT_MS || 15000)
+    REQUEST_TIMEOUT_MS: Number(process.env.REQUEST_TIMEOUT_MS || 15000),
   };
 }
 
@@ -37,7 +37,7 @@ function validateConfig(config) {
     "ROLL_NO",
     "ACCESS_CODE",
     "CLIENT_ID",
-    "CLIENT_SECRET"
+    "CLIENT_SECRET",
   ];
 
   const missing = required.filter((key) => !config[key]);
@@ -45,12 +45,12 @@ function validateConfig(config) {
   if (missing.length > 0) {
     throw new Error(
       `Missing environment variables: ${missing.join(", ")}. ` +
-        "Provide ACCESS_TOKEN for token-only mode, or set full auth credentials in .env."
+        "Provide ACCESS_TOKEN for token-only mode, or set full auth credentials in .env.",
     );
   }
 }
 
 module.exports = {
   buildConfig,
-  validateConfig
+  validateConfig,
 };

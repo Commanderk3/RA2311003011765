@@ -21,16 +21,16 @@ async function getAccessToken(config) {
     rollNo: config.ROLL_NO,
     accessCode: config.ACCESS_CODE,
     clientID: config.CLIENT_ID,
-    clientSecret: config.CLIENT_SECRET
+    clientSecret: config.CLIENT_SECRET,
   });
 
   const response = await httpJson(config.AUTH_URL, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body,
-    timeoutMs: config.REQUEST_TIMEOUT_MS
+    timeoutMs: config.REQUEST_TIMEOUT_MS,
   });
 
   if (!response.access_token) {
@@ -41,5 +41,5 @@ async function getAccessToken(config) {
 }
 
 module.exports = {
-  getAccessToken
+  getAccessToken,
 };

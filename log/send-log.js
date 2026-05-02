@@ -23,10 +23,15 @@ async function sendLog(config, level, pkg, message, stack = "backend") {
     stack: normalizeValue(stack).toLowerCase(),
     level: normalizeValue(level).toLowerCase(),
     package: normalizeValue(pkg).toLowerCase(),
-    message: normalizeValue(message)
+    message: normalizeValue(message),
   };
 
-  if (!payload.stack || !payload.level || !payload.package || !payload.message) {
+  if (
+    !payload.stack ||
+    !payload.level ||
+    !payload.package ||
+    !payload.message
+  ) {
     return;
   }
 
@@ -35,10 +40,10 @@ async function sendLog(config, level, pkg, message, stack = "backend") {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(config.REQUEST_TIMEOUT_MS || 10000)
+      signal: AbortSignal.timeout(config.REQUEST_TIMEOUT_MS || 10000),
     });
   } catch (_error) {
     // Logging should never break business behavior.
@@ -46,5 +51,5 @@ async function sendLog(config, level, pkg, message, stack = "backend") {
 }
 
 module.exports = {
-  sendLog
+  sendLog,
 };
