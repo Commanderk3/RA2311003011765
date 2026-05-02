@@ -1,25 +1,25 @@
 # Stage 1
 
-## 1.1 Core Actions
+## 1.1 Key Activities
 
-1. List notifications for a logged-in student.
-2. Fetch a single notification by ID.
+1. Get all notifications for a logged-in student.
+2. Get one notification by its ID.
 3. Mark one notification as read.
 4. Mark all notifications as read.
-5. Fetch unread count for badge display.
-6. Create notification (admin/placement office/event team/result system).
-7. Create bulk notification to many students.
-8. Deliver real-time notification updates.
+5. Count number of unread notifications for badge.
+6. Add notification (admin/placement office/event team/result system).
+7. Add notifications to many students at once.
+8. Send real-time updates for notifications.
 
-## 1.2 API Conventions
+## 1.2 REST API Guidelines
 
-- Base path: `/api/v1`
-- Auth: `Authorization: Bearer <JWT>`
-- Content type: `application/json`
-- Time format: ISO-8601 UTC (`2026-05-02T06:20:00Z`)
-- Cursor pagination for feeds
+- Base URL: `/api/v1`
+- Authorization: `Authorization: Bearer <JWT>`
+- Payload Type: `application/json`
+- Date Format: ISO-8601 UTC (e.g., `2026-05-02T06:20:00Z`)
+- Feeds should use cursor-based pagination
 
-Common notification object:
+Notification model:
 
 ```json
 {
@@ -30,13 +30,7 @@ Common notification object:
   "message": "Company ABC test link is live",
   "priority": 3,
   "isRead": false,
-  "createdAt": "2026-05-02T06:20:00Z",
-  "readAt": null,
-  "metadata": {
-    "ctaUrl": "https://campus.example.com/placements/abc"
-  }
-}
-```
+  "createdAt": "202
 
 ## 1.3 Endpoints
 
@@ -51,8 +45,8 @@ Accept: application/json
 
 Query params:
 
-- `limit` (default 20, max 100)
-- `cursor` (opaque token for pagination)
+- `limit` (default 20, maximum 100)
+- `cursor` (opaque token used for pagination)
 - `type` (`placement|result|event`)
 - `unreadOnly` (`true|false`)
 
@@ -89,91 +83,6 @@ Response `200`:
 Headers:
 
 ```http
-Authorization: Bearer <token>
-Accept: application/json
-```
-
-Response `200`:
-
-```json
-{
-  "item": {
-    "id": "7060f52e-2f38-41b3-95d2-0c7b0b3bd7c8",
-    "studentId": "3f0e8680-ffb4-4a4a-a19f-56b5119f3a33",
-    "type": "result",
-    "title": "Mid-Sem Result",
-    "message": "Your result is published",
-    "priority": 2,
-    "isRead": false,
-    "createdAt": "2026-05-02T06:20:00Z",
-    "readAt": null,
-    "metadata": {}
-  }
-}
-```
-
-Response `404`:
-
-```json
-{
-  "error": {
-    "code": "NOT_FOUND",
-    "message": "Notification not found"
-  }
-}
-```
-
-### PATCH `/api/v1/notifications/{id}/read`
-
-Headers:
-
-```http
-Authorization: Bearer <token>
-Content-Type: application/json
-```
-
-Request:
-
-```json
-{
-  "read": true
-}
-```
-
-Response `200`:
-
-```json
-{
-  "id": "7060f52e-2f38-41b3-95d2-0c7b0b3bd7c8",
-  "isRead": true,
-  "readAt": "2026-05-02T06:25:30Z"
-}
-```
-
-### PATCH `/api/v1/notifications/read-all`
-
-Headers:
-
-```http
-Authorization: Bearer <token>
-Content-Type: application/json
-```
-
-Request:
-
-```json
-{
-  "type": "placement"
-}
-```
-
-Response `200`:
-
-```json
-{
-  "updatedCount": 24
-}
-```
 
 ### GET `/api/v1/notifications/unread-count`
 
