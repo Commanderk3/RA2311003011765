@@ -1,25 +1,25 @@
 # Vehicle Maintenance Scheduler Microservice
 
-This service fetches protected data from:
+This microservice extracts protected information via:
 
 - `GET /evaluation-service/depots`
 - `GET /evaluation-service/vehicles`
 
-Then it computes the best subset of maintenance tasks for each depot using 0/1 knapsack dynamic programming, maximizing total impact without exceeding mechanic-hour capacity.
+Afterwards, it applies a 0/1 knapsack dynamic programming algorithm to find the optimal combination of maintenance activities per depot with maximum impact while not surpassing mechanic hour limit.
 
 ## Setup
 
-1. Create `.env` in this folder:
+1. Copy `.env` file into this directory:
 
 ```powershell
 Copy-Item .env.example .env
 ```
 
-2. Prefer token-only mode in `.env`:
+2. Token-based authentication is recommended:
 
 - `ACCESS_TOKEN`
 
-If `ACCESS_TOKEN` is not set, fallback credentials are required:
+If `ACCESS_TOKEN` is absent, you must use credentials instead:
 
 - `EMAIL`
 - `NAME`
@@ -34,7 +34,7 @@ Optional:
 - `PORT` (default: `3000`)
 - `REQUEST_TIMEOUT_MS` (default: `15000`)
 
-## Run As Microservice
+## Run as Microservice
 
 ```bash
 npm start
@@ -46,34 +46,32 @@ Endpoints:
 - `GET /schedule`
 - `GET /schedule?depotId=2`
 
-## Generate Submission Outputs
+## Generate Outputs for Submission
 
 ```bash
 npm run schedule
 ```
 
-This writes:
+It generates:
 
 - `output/schedule-result.json`
 - `output/schedule-report.txt`
 
-## Shared Logging
+## Shared Logger Module
 
-`vehicle_scheduling` uses a shared logger outside this project:
+`vehicle_scheduling` module imports a shared logger that lies outside this project:
 
 - `../log/send-log.js`
 
-This makes the same logger reusable in other projects in this repo.
+This lets you share a single logger in other modules in this repository.
 
-- Logs are sent automatically during `npm start` and `npm run schedule`.
-- It uses the same `ACCESS_TOKEN` from `.env`.
-- Optional override:
-  - `LOG_SERVER_URL` (default: `http://20.244.56.144/evaluation-service/logs`)
+- Automatically sends logs upon executing `npm start` and `npm run schedule`.
+- Authenticates using the `ACCESS_TOKEN` from `.env
 
 ## Algorithm
 
-- Uses dynamic programming (0/1 knapsack).
-- Time complexity: `O(N * W)` where:
-  - `N` = number of vehicle tasks
-  - `W` = max mechanic-hour budget across target depots
-- Space complexity: `O(N * W)` for reconstruction matrix plus `O(W)` for DP values.
+- Dynamic programming approach (0/1 knapsack).
+- Time complexity: `O(N * W)` with:
+  - `N` being the total number of tasks assigned to vehicles.
+  - `W` being the maximum budget in mechanic-hours for target depots.
+- Space complexity: `O(N * W)` for reconstruction array + `O(W)` for DP values.
