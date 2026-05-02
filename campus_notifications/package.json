@@ -1,0 +1,13 @@
+{
+  "name": "campus-notifications-microservice",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Campus Notifications deliverables including Stage 6 priority inbox implementation.",
+  "type": "commonjs",
+  "scripts": {
+    "stage6": "node src/stage6_priority_inbox.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

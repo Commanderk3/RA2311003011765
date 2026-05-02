@@ -57,31 +57,18 @@ This writes:
 - `output/schedule-result.json`
 - `output/schedule-report.txt`
 
-## Logging Middleware Utility
+## Shared Logging
 
-A reusable logging utility is available at:
+`vehicle_scheduling` uses a shared logger outside this project:
 
-- `src/logging/logger.js`
+- `../log/send-log.js`
 
-Config file for token paste:
+This makes the same logger reusable in other projects in this repo.
 
-- `src/logging/config.js`
-
-1. Open `src/logging/config.js`
-2. Paste your access token in `AUTH_TOKEN`
-3. Keep the endpoint as `http://20.244.56.144/evaluation-service/logs` unless your pre-test doc says otherwise
-
-Function signature:
-
-```js
-await Log(stack, level, packageName, message);
-```
-
-Quick test:
-
-```bash
-npm run log:test
-```
+- Logs are sent automatically during `npm start` and `npm run schedule`.
+- It uses the same `ACCESS_TOKEN` from `.env`.
+- Optional override:
+  - `LOG_SERVER_URL` (default: `http://20.244.56.144/evaluation-service/logs`)
 
 ## Algorithm
 

@@ -1,6 +1,6 @@
 const { getAccessToken } = require("./auth");
 const { fetchDepots, fetchVehicles } = require("./api");
-const { buildKnapsackPlanner } = require("./knapsack");
+const { planKnapsack } = require("./knapsack");
 
 function normalizeDepots(rawDepots) {
   if (!Array.isArray(rawDepots)) {
@@ -107,7 +107,7 @@ async function generateSchedules(config, options = {}) {
   const maxCapacity = Math.max(
     ...targetDepots.map((depot) => depot.MechanicHours)
   );
-  const planner = buildKnapsackPlanner(vehicles, maxCapacity);
+  const planner = planKnapsack(vehicles, maxCapacity);
 
   const schedules = targetDepots.map((depot) => {
     const result = planner.solve(depot.MechanicHours);

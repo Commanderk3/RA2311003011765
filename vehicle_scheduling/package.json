@@ -6,8 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "node src/server.js",
-    "schedule": "node src/run-scheduler.js",
-    "log:test": "node src/logging/test-log.js"
+    "schedule": "node src/run-scheduler.js"
   },
   "engines": {
     "node": ">=18"

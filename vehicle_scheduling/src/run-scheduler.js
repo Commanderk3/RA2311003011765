@@ -2,7 +2,9 @@ const fs = require("fs");
 const path = require("path");
 const { buildConfig, validateConfig } = require("./config");
 const { generateSchedules } = require("./scheduler");
-const { Log } = require("./logging");
+const { sendLog } = require("../../log");
+
+const config = buildConfig();
 
 function buildTextReport(result) {
   const lines = [
@@ -32,7 +34,6 @@ function buildTextReport(result) {
 }
 
 async function main() {
-  const config = buildConfig();
   validateConfig(config);
 
   const result = await generateSchedules(config);
@@ -44,11 +45,11 @@ async function main() {
   fs.writeFileSync(jsonPath, JSON.stringify(result, null, 2), "utf8");
   fs.writeFileSync(txtPath, buildTextReport(result), "utf8");
 
-  await Log(
-    "backend",
+  await sendLog(
+    config,
     "INFO",
     "middleware",
-    `Scheduler output generated for ${result.depotCount} depots and saved to output files.`
+    `Scheduler output for ${result.depotCount} depots and saved to output files.`
   );
 
   console.log(`Saved JSON output to ${jsonPath}`);
@@ -56,8 +57,8 @@ async function main() {
 }
 
 main().catch((error) => {
-  void Log(
-    "backend",
+  void sendLog(
+    config,
     "ERROR",
     "middleware",
     `Scheduler run failed: ${error.message}`

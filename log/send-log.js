@@ -1,14 +1,21 @@
-const { loggingConfig } = require("./config");
-
 function normalizeValue(value) {
   return String(value || "").trim();
 }
 
-async function Log(stack, level, pkg, message) {
-  const token = normalizeValue(loggingConfig.AUTH_TOKEN);
-  const url = normalizeValue(loggingConfig.LOG_SERVER_URL);
+function normalizeTheToken(token) {
+  const raw = normalizeValue(token);
+  if (!raw) {
+    return "";
+  }
 
-  if (!token || token === "PASTE_YOUR_ACCESS_TOKEN_HERE" || !url) {
+  return raw.replace(/^Bearer\s+/i, "").trim();
+}
+
+async function sendLog(config, level, pkg, message, stack = "backend") {
+  const token = normalizeTheToken(config.ACCESS_TOKEN);
+  const logUrl = normalizeValue(config.LOG_SERVER_URL);
+
+  if (!token || !logUrl) {
     return;
   }
 
@@ -24,20 +31,20 @@ async function Log(stack, level, pkg, message) {
   }
 
   try {
-    await fetch(url, {
+    await fetch(logUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(loggingConfig.REQUEST_TIMEOUT_MS)
+      signal: AbortSignal.timeout(config.REQUEST_TIMEOUT_MS || 10000)
     });
   } catch (_error) {
-    // Logging should not crash business flows.
+    // Logging should never break business behavior.
   }
 }
 
 module.exports = {
-  Log
+  sendLog
 };

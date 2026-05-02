@@ -1,6 +1,6 @@
 const { httpJson } = require("./http");
 
-function authHeaders(token) {
+function headerAuth(token) {
   return {
     Authorization: `Bearer ${token}`
   };
@@ -9,7 +9,7 @@ function authHeaders(token) {
 async function fetchDepots(config, token) {
   return httpJson(config.DEPOTS_URL, {
     method: "GET",
-    headers: authHeaders(token),
+    headers: headerAuth(token),
     timeoutMs: config.REQUEST_TIMEOUT_MS
   });
 }
@@ -17,7 +17,7 @@ async function fetchDepots(config, token) {
 async function fetchVehicles(config, token) {
   return httpJson(config.VEHICLES_URL, {
     method: "GET",
-    headers: authHeaders(token),
+    headers: headerAuth(token),
     timeoutMs: config.REQUEST_TIMEOUT_MS
   });
 }

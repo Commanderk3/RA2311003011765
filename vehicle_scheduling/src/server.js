@@ -2,7 +2,7 @@ const http = require("http");
 const { URL } = require("url");
 const { buildConfig, validateConfig } = require("./config");
 const { generateSchedules } = require("./scheduler");
-const { Log } = require("./logging");
+const { sendLog } = require("../../log");
 
 const config = buildConfig();
 
@@ -15,27 +15,27 @@ const server = http.createServer(async (req, res) => {
   const requestUrl = new URL(req.url, `http://${req.headers.host}`);
 
   if (req.method === "GET" && requestUrl.pathname === "/health") {
-    void Log("backend", "INFO", "middleware", "Health endpoint requested.");
+    void sendLog(config, "INFO", "middleware", "Health endpoint requested.");
     writeJson(res, 200, { status: "ok" });
     return;
   }
 
   if (req.method === "GET" && requestUrl.pathname === "/schedule") {
-    void Log("backend", "INFO", "middleware", "Schedule endpoint requested.");
+    void sendLog(config, "INFO", "middleware", "Schedule endpoint requested.");
     try {
       validateConfig(config);
       const depotId = requestUrl.searchParams.get("depotId");
       const result = await generateSchedules(config, { depotId });
-      void Log(
-        "backend",
+      void sendLog(
+        config,
         "INFO",
         "middleware",
         `Schedule generated successfully for depotId=${depotId || "all"}.`
       );
       writeJson(res, 200, result);
     } catch (error) {
-      void Log(
-        "backend",
+      void sendLog(
+        config,
         "ERROR",
         "middleware",
         `Schedule generation failed: ${error.message}`

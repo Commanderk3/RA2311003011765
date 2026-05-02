@@ -17,22 +17,20 @@ function loadEnv(filePath = path.join(process.cwd(), ".env")) {
     return;
   }
 
-  const raw = fs.readFileSync(filePath, "utf8");
-  const lines = raw.split(/\r?\n/);
-
+  const lines = fs.readFileSync(filePath, "utf8").split(/\r?\n/);
   for (const rawLine of lines) {
     const line = rawLine.trim();
     if (!line || line.startsWith("#")) {
       continue;
     }
 
-    const separatorIndex = line.indexOf("=");
-    if (separatorIndex === -1) {
+    const eqIndex = line.indexOf("=");
+    if (eqIndex < 0) {
       continue;
     }
 
-    const key = line.slice(0, separatorIndex).trim();
-    const value = stripQuotes(line.slice(separatorIndex + 1).trim());
+    const key = line.slice(0, eqIndex).trim();
+    const value = stripQuotes(line.slice(eqIndex + 1).trim());
     if (key && process.env[key] === undefined) {
       process.env[key] = value;
     }

@@ -34,7 +34,7 @@ async function getAccessToken(config) {
   });
 
   if (!response.access_token) {
-    throw new Error("Authentication succeeded but access_token is missing.");
+    throw new Error("Authentication succeeded but access_token was missing.");
   }
 
   return response.access_token;

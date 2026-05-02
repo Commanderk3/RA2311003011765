@@ -14,20 +14,15 @@ function buildConfig() {
     ACCESS_CODE: process.env.ACCESS_CODE,
     CLIENT_ID: process.env.CLIENT_ID,
     CLIENT_SECRET: process.env.CLIENT_SECRET,
-    API_BASE_URL: apiBaseUrl,
     AUTH_URL: `${apiBaseUrl}/auth`,
-    DEPOTS_URL: `${apiBaseUrl}/depots`,
-    VEHICLES_URL: `${apiBaseUrl}/vehicles`,
-    LOG_SERVER_URL:
-      process.env.LOG_SERVER_URL ||
-      "http://20.244.56.144/evaluation-service/logs",
-    PORT: Number(process.env.PORT || 3000),
-    REQUEST_TIMEOUT_MS: Number(process.env.REQUEST_TIMEOUT_MS || 15000)
+    NOTIFICATIONS_URL: `${apiBaseUrl}/notifications`,
+    REQUEST_TIMEOUT_MS: Number(process.env.REQUEST_TIMEOUT_MS || 15000),
+    TOP_N: Number(process.env.TOP_N || 10)
   };
 }
 
 function validateConfig(config) {
-  if (config.ACCESS_TOKEN) {
+  if (String(config.ACCESS_TOKEN || "").trim()) {
     return;
   }
 
@@ -40,12 +35,11 @@ function validateConfig(config) {
     "CLIENT_SECRET"
   ];
 
-  const missing = required.filter((key) => !config[key]);
-
+  const missing = required.filter((key) => !String(config[key] || "").trim());
   if (missing.length > 0) {
     throw new Error(
-      `Missing environment variables: ${missing.join(", ")}. ` +
-        "Provide ACCESS_TOKEN for token-only mode, or set full auth credentials in .env."
+      `Missing configuration: ${missing.join(", ")}. ` +
+        "Set ACCESS_TOKEN, or set all fallback auth credentials in .env."
     );
   }
 }

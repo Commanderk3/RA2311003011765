@@ -1,0 +1,97 @@
+{
+  "generatedAt": "2026-05-02T01:26:43.167Z",
+  "totalFetched": 20,
+  "returnedCount": 10,
+  "topNotifications": [
+    {
+      "ID": "bb8f5260-760b-4ce3-a636-685ce4c45af5",
+      "Type": "Placement",
+      "Message": "Amazon.com Inc. hiring",
+      "Timestamp": "2026-05-02 05:24:51",
+      "weight": 3,
+      "timestampMs": 1777679691000,
+      "priorityScore": 31777679691000
+    },
+    {
+      "ID": "f3fa9e48-7a81-4ada-bbef-a91858f3fd26",
+      "Type": "Placement",
+      "Message": "Marriott International Inc. hiring",
+      "Timestamp": "2026-05-02 04:55:27",
+      "weight": 3,
+      "timestampMs": 1777677927000,
+      "priorityScore": 31777677927000
+    },
+    {
+      "ID": "fa109787-05dd-4b4c-8418-4538d9efbdb8",
+      "Type": "Placement",
+      "Message": "Amgen Inc. hiring",
+      "Timestamp": "2026-05-02 02:26:09",
+      "weight": 3,
+      "timestampMs": 1777668969000,
+      "priorityScore": 31777668969000
+    },
+    {
+      "ID": "52178424-2b27-4c59-8301-9ee668692f60",
+      "Type": "Placement",
+      "Message": "Marriott International Inc. hiring",
+      "Timestamp": "2026-05-01 18:54:45",
+      "weight": 3,
+      "timestampMs": 1777641885000,
+      "priorityScore": 31777641885000
+    },
+    {
+      "ID": "3b815fca-5fbe-41d8-ad24-fe45d45b571b",
+      "Type": "Placement",
+      "Message": "Apple Inc. hiring",
+      "Timestamp": "2026-05-01 14:54:57",
+      "weight": 3,
+      "timestampMs": 1777627497000,
+      "priorityScore": 31777627497000
+    },
+    {
+      "ID": "1be1eb9f-87ee-4fdd-9eed-f889db96cc02",
+      "Type": "Placement",
+      "Message": "Microsoft Corporation hiring",
+      "Timestamp": "2026-05-01 14:25:03",
+      "weight": 3,
+      "timestampMs": 1777625703000,
+      "priorityScore": 31777625703000
+    },
+    {
+      "ID": "01df4c8c-a7bb-4e38-8880-933a56128d94",
+      "Type": "Placement",
+      "Message": "Apple Inc. hiring",
+      "Timestamp": "2026-05-01 08:26:15",
+      "weight": 3,
+      "timestampMs": 1777604175000,
+      "priorityScore": 31777604175000
+    },
+    {
+      "ID": "7b60e527-8a1f-47db-951d-52752d64b7bf",
+      "Type": "Placement",
+      "Message": "Berkshire Hathaway Inc. hiring",
+      "Timestamp": "2026-05-01 06:56:03",
+      "weight": 3,
+      "timestampMs": 1777598763000,
+      "priorityScore": 31777598763000
+    },
+    {
+      "ID": "b6eb9666-c220-47ab-be41-f76cd3ab052b",
+      "Type": "Result",
+      "Message": "external",
+      "Timestamp": "2026-05-01 23:25:57",
+      "weight": 2,
+      "timestampMs": 1777658157000,
+      "priorityScore": 21777658157000
+    },
+    {
+      "ID": "4f5cf07d-163e-49de-939a-c4f3fe16c743",
+      "Type": "Result",
+      "Message": "internal",
+      "Timestamp": "2026-05-01 20:25:33",
+      "weight": 2,
+      "timestampMs": 1777647333000,
+      "priorityScore": 21777647333000
+    }
+  ]
+}
